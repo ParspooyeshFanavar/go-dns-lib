@@ -15,7 +15,6 @@ const (
 // JSON serialization only supports nullifying types that can accept nil.
 // The ECS fields are pointers because they're nullable.
 type DnsSchema struct {
-	Timestamp          int64   `json:"timestamp"`
 	Sha256             string  `json:"sha256,omitempty"`
 	Udp                bool    `json:"udp,omitempty"`
 	Ipv                uint8   `json:"ipv,omitempty"`
