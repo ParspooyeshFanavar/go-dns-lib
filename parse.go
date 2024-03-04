@@ -44,7 +44,7 @@ func ParseDNSPacket(packet gopacket.Packet) (*Request, error) {
 		payload = tcp.Payload
 		msg = &dns.Msg{}
 		if err := msg.Unpack(tcp.Payload); err != nil {
-			return nil, fmt.Errorf("could not decode DNS: %v\n", err)
+			return nil, fmt.Errorf("could not decode DNS: %v", err)
 		}
 		schema.SourcePort = uint16(tcp.SrcPort)
 		schema.DestinationPort = uint16(tcp.DstPort)
@@ -55,7 +55,7 @@ func ParseDNSPacket(packet gopacket.Packet) (*Request, error) {
 		payload = udp.Payload
 		msg = &dns.Msg{}
 		if err := msg.Unpack(udp.Payload); err != nil {
-			return nil, fmt.Errorf("could not decode DNS: %v\n", err)
+			return nil, fmt.Errorf("could not decode DNS: %v", err)
 		}
 		schema.SourcePort = uint16(udp.SrcPort)
 		schema.DestinationPort = uint16(udp.DstPort)

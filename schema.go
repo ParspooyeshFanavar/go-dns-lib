@@ -16,30 +16,30 @@ const (
 // The ECS fields are pointers because they're nullable.
 type DnsSchema struct {
 	Timestamp          int64   `json:"timestamp"`
-	Sha256             string  `json:"sha256"`
-	Udp                bool    `json:"udp"`
-	Ipv4               bool    `json:"ipv4"`
+	Sha256             string  `json:"sha256,omitempty"`
+	Udp                bool    `json:"udp,omitempty"`
+	Ipv4               bool    `json:"ipv4,omitempty"`
 	SourceAddress      string  `json:"src_address"`
 	SourcePort         uint16  `json:"src_port"`
 	DestinationAddress string  `json:"dst_address"`
 	DestinationPort    uint16  `json:"dst_port"`
-	Id                 uint16  `json:"id"`
-	Rcode              int     `json:"rcode"`
-	Truncated          bool    `json:"truncated"`
-	Response           bool    `json:"response"`
-	RecursionDesired   bool    `json:"recursion_desired"`
-	Answer             bool    `json:"answer"`
-	Authority          bool    `json:"authority"`
-	Additional         bool    `json:"additional"`
-	Qname              string  `json:"qname"`
-	Qtype              uint16  `json:"qtype"`
-	Ttl                *uint32 `json:"ttl"`
-	Rname              *string `json:"rname"`
-	Rtype              *uint16 `json:"rtype"`
-	Rdata              *string `json:"rdata"`
-	EcsClient          *string `json:"ecs_client"`
-	EcsSource          *uint8  `json:"ecs_source"`
-	EcsScope           *uint8  `json:"ecs_scope"`
+	Id                 uint16  `json:"id,omitempty"`
+	Rcode              int     `json:"rcode,omitempty"`
+	Truncated          bool    `json:"truncated,omitempty"`
+	Response           bool    `json:"response,omitempty"`
+	RecursionDesired   bool    `json:"recursion_desired,omitempty"`
+	Answer             bool    `json:"answer,omitempty"`
+	Authority          bool    `json:"authority,omitempty"`
+	Additional         bool    `json:"additional,omitempty"`
+	Qname              string  `json:"qname,omitempty"`
+	Qtype              uint16  `json:"qtype,omitempty"`
+	Ttl                *uint32 `json:"ttl,omitempty"`
+	Rname              *string `json:"rname,omitempty"`
+	Rtype              *uint16 `json:"rtype,omitempty"`
+	Rdata              *string `json:"rdata,omitempty"`
+	EcsClient          *string `json:"ecs_client,omitempty"`
+	EcsSource          *uint8  `json:"ecs_source,omitempty"`
+	EcsScope           *uint8  `json:"ecs_scope,omitempty"`
 	Source             string  `json:"source,omitempty"`
 	Sensor             string  `json:"sensor,omitempty"`
 }
