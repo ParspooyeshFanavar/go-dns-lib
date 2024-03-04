@@ -25,12 +25,12 @@ func ParseDNSPacket(packet gopacket.Packet) (*Request, error) {
 		ip4 := networkLayer.(*layers.IPv4)
 		schema.SourceAddress = ip4.SrcIP.String()
 		schema.DestinationAddress = ip4.DstIP.String()
-		schema.Ipv4 = true
+		schema.Ipv = 4
 	case layers.LayerTypeIPv6:
 		ip6 := networkLayer.(*layers.IPv6)
 		schema.SourceAddress = ip6.SrcIP.String()
 		schema.DestinationAddress = ip6.DstIP.String()
-		schema.Ipv4 = false
+		schema.Ipv = 6
 	}
 
 	// Parse DNS and transport layer information

@@ -18,7 +18,7 @@ type DnsSchema struct {
 	Timestamp          int64   `json:"timestamp"`
 	Sha256             string  `json:"sha256,omitempty"`
 	Udp                bool    `json:"udp,omitempty"`
-	Ipv4               bool    `json:"ipv4,omitempty"`
+	Ipv                uint8   `json:"ipv,omitempty"`
 	SourceAddress      string  `json:"src_address"`
 	SourcePort         uint16  `json:"src_port"`
 	DestinationAddress string  `json:"dst_address"`
