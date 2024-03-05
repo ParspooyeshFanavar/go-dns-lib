@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func ParseDNSPacket(packet gopacket.Packet) (*Request, error) {
+func ParsePacket(packet gopacket.Packet) (*ParsePacketResult, error) {
 	schema := &DnsSchema{}
 	var msg *dns.Msg
 	var payload []byte
@@ -68,7 +68,7 @@ func ParseDNSPacket(packet gopacket.Packet) (*Request, error) {
 			schema.Sha256 = fmt.Sprintf("%x", sha256.Sum256(append(tsSalt, packet.Data()...)))
 		}
 	}
-	return &Request{
+	return &ParsePacketResult{
 		Schema:  schema,
 		Msg:     msg,
 		Payload: payload,

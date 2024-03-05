@@ -4,7 +4,7 @@ import (
 	"github.com/miekg/dns"
 )
 
-type Request struct {
+type ParsePacketResult struct {
 	Schema  *DnsSchema
 	Msg     *dns.Msg
 	Payload []byte
