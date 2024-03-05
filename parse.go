@@ -2,6 +2,7 @@ package dnslib
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 
 	"github.com/ParspooyeshFanavar/gopacket"
@@ -18,7 +19,7 @@ func ParsePacket(packet gopacket.Packet) (*ParsePacketResult, error) {
 	// Parse network layer information
 	networkLayer := packet.NetworkLayer()
 	if networkLayer == nil {
-		return nil, fmt.Errorf("unknown/missing network layer for packet")
+		return nil, fmt.Errorf("unknown/missing network layer in packet")
 	}
 	switch networkLayer.LayerType() {
 	case layers.LayerTypeIPv4:
@@ -31,6 +32,8 @@ func ParsePacket(packet gopacket.Packet) (*ParsePacketResult, error) {
 		schema.SourceAddress = ip6.SrcIP.String()
 		schema.DestinationAddress = ip6.DstIP.String()
 		schema.Ipv = 6
+	default:
+		return nil, fmt.Errorf("unknown network layer %v", networkLayer.LayerType())
 	}
 
 	// Parse DNS and transport layer information
@@ -49,7 +52,8 @@ func ParsePacket(packet gopacket.Packet) (*ParsePacketResult, error) {
 		schema.SourcePort = uint16(tcp.SrcPort)
 		schema.DestinationPort = uint16(tcp.DstPort)
 		schema.Udp = false
-		schema.Sha256 = fmt.Sprintf("%x", sha256.Sum256(tcp.Payload))
+		_hash := sha256.Sum256(tcp.Payload)
+		schema.Sha256 = hex.EncodeToString(_hash[:])
 	case layers.LayerTypeUDP:
 		udp := transportLayer.(*layers.UDP)
 		payload = udp.Payload
@@ -65,8 +69,11 @@ func ParsePacket(packet gopacket.Packet) (*ParsePacketResult, error) {
 		if err != nil {
 			zap.L().Sugar().Errorw("could not marshal timestamp", "error", err)
 		} else {
-			schema.Sha256 = fmt.Sprintf("%x", sha256.Sum256(append(tsSalt, packet.Data()...)))
+			_hash := sha256.Sum256(append(tsSalt, packet.Data()...))
+			schema.Sha256 = hex.EncodeToString(_hash[:])
 		}
+	default:
+		return nil, fmt.Errorf("unknown transport layer %v", transportLayer.LayerType())
 	}
 	return &ParsePacketResult{
 		Schema:  schema,
